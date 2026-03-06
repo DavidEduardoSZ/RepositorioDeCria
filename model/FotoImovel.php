@@ -3,7 +3,7 @@ require_once(__DIR__ . "/../config/conexao.php");
  
 class FotoImovel
 {
-    // Propriedades privadas baseadas no diagrama
+   
     private ?int $id_foto;
     private int $id_imovel;
     private string $caminho;
@@ -24,7 +24,7 @@ class FotoImovel
         $this->ordem = $ordem;
     }
  
-    // Métodos mágicos Get e Set seguindo o padrão do seu projeto
+  
     public function __get(string $prop)
     {
         if (property_exists($this, $prop)) {
@@ -59,11 +59,11 @@ class FotoImovel
         return (new Conexao())->conexao();
     }
  
-    // Método para Salvar a foto no banco de dados
+    
     public function salvar()
     {
         $pdo = self::getConexao();
-        // SQL direcionado para a tabela fotos_imovel
+        
         $sql = "INSERT INTO `fotos_imovel` (id_imovel, caminho, destaque, ordem) 
                 VALUES (:id_imovel, :caminho, :destaque, :ordem)";
  
@@ -71,7 +71,7 @@ class FotoImovel
         $res = $stmt->execute([
             ':id_imovel' => $this->id_imovel,
             ':caminho'   => $this->caminho,
-            ':destaque'  => $this->destaque ? 1 : 0, // tinyint(1) no banco
+            ':destaque'  => $this->destaque ? 1 : 0,
             ':ordem'     => $this->ordem
         ]);
  
@@ -81,7 +81,7 @@ class FotoImovel
         return $res;
     }
  
-    // Método para buscar fotos por imóvel
+    
     public static function buscarPorImovel(int $idImovel)
     {
         $pdo = self::getConexao();
@@ -102,7 +102,7 @@ class FotoImovel
         return $fotos;
     }
  
-    // Método solicitado no diagrama
+   
     public function reordenar(int $novaOrdem)
     {
         $this->ordem = $novaOrdem;
