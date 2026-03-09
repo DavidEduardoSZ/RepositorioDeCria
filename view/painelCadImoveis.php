@@ -125,7 +125,7 @@
 
             <div class="card-header-custom">
                 <h4 class="m-0">Novo Cadastro de Imóvel</h4>
-                <a href="admin_lista_imoveis.html" class="btn btn-sm btn-outline-secondary">Voltar para lista</a>
+                <a href="painelAdmin.php" class="btn btn-sm btn-outline-secondary">Voltar para lista</a>
             </div>
 
           <!-- ALERTA -->
@@ -267,8 +267,10 @@
                     <div class="col-md-3 mb-3">
                         <label class="form-label">Status Inicial</label>
                         <select name="status" class="form-select">
-                            <option value="disponivel">Disponível</option>
-                            <option value="inativo">Inativo / Rascunho</option>
+                            <option value="Disponível">Disponível</option>
+                            <option value="Alugado">Alugado</option>
+                            <option value="Vendido">Vendido</option>
+                            <option value="Inativo">Inativo / Rascunho</option>
                         </select>
                     </div>
 

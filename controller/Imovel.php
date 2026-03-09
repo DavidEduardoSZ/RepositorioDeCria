@@ -1,6 +1,7 @@
 <?php
 require_once(__DIR__ . "/../model/Imoveis.php");
 require_once(__DIR__ . "/../model/FotoImovel.php");
+session_start();
  
 function criarSlug($titulo) {
     return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $titulo)));
@@ -57,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         
                         $foto = new FotoImovel(
                             id_imovel: $idImovel,
-                            caminho:   "uploads/imoveis/" . $nomeArquivo,
+                            caminho:   $caminhoFisico,
                             destaque:  $destaque,
                             ordem:     $key
                         );
@@ -66,8 +67,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
  
-           
-            header("Location: ../view/painelCadImoveis.php?sucesso=1");
+            session_start();
+
+            $_SESSION['mensagem'] = "Imóvel cadastrado com sucesso!";
+            $_SESSION['tipo_alerta'] = 'success';
+
+            header("Location: ../view/painelAdmin.php");
             exit;
         }
     } catch (Exception $e) {
@@ -93,9 +98,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     rmdir($diretorio);
             }
 
-            echo "Excluído com sucesso!";
+            $_SESSION['mensagem'] = "Imóvel excluído com sucesso!";
+            $_SESSION['tipo_alerta'] = 'danger';
 
+           header("Location: ../view/painelAdmin.php");
+           exit();
         }
+
+        
+
+    } // FIM EXCLUIR
+
+    $filtros = [
+            'status' => 'Disponível',
+            'tipo' => 'Casa',
+            'localizacao' => 'São Paulo',
+            
+
+    ];
+
+
+    if(isset($_GET['filtro'])){
+        Imovel::listarComFiltros($filtros);
+        
 
     }
 
